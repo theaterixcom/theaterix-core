@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-    <!--<img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>-->
     <div v-if="statusVideo === true" class="popup" @click="statusVideo = false">
       <youtube :video-id="thing" ref="youtube" @playing="playing" :player-vars="playerVars"></youtube>
     </div>
@@ -25,9 +23,7 @@
                     {{ item.type }}
                     <h1 class="text-primary talk-title">{{ item.title }}</h1>
             </div>
-        </div> 
-        
-  
+        </div>
   </div>
 </template>
 
@@ -63,10 +59,8 @@ export default {
         this.statusVideo = true;
     },    
     api () {
-      // Sends a get request to the API endpoint.
       axios.get(api).then(response => {
           this.items = response.data
-          console.log(this.items);
       });
     },
     playVideo() {
@@ -74,14 +68,8 @@ export default {
     },   
     playing() {
       console.log('/ we are watching!!!')
-    },
-    // destroy() {
-    //   this.$destroy();
-    // }        
+    }
   },
-  // beforeDestroy() {
-  //   console.log('Main Vue destroyed')
-  // },  
   created() {
     this.api();
   },
