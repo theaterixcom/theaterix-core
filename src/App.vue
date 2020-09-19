@@ -2,14 +2,19 @@
   <div id="app">
     <!--<img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>-->
-<div v-for="item in items" :key="item.id" data-aos="zoom-out-up" data-aos-offset="100" data-aos-easing="ease-out-back" class="col-lg-4 my-4">
+    <div v-if="statusVideo === true" class="popup" @click="statusVideo = false">
+      <youtube :video-id="thing" ref="youtube" @playing="playing" :player-vars="playerVars"></youtube>
+    </div>
+    <div v-for="item in items" :key="item.id" data-aos="zoom-out-up" data-aos-offset="100" data-aos-easing="ease-out-back" class="col-lg-4 my-4">
             <div class="col-lg-4 col-sm-6">
-                    <div v-if="item.type === 'media' && statusVideo === true" class="popup" @click="statusVideo = false">
-                      <youtube :video-id="thing" ref="youtube" @playing="playing" :player-vars="playerVars"></youtube>
-                    </div>
                     <figure>
-                        <img @click="doSomethingWith(item.url); playVideo" v-if="item.cover" :src="item.cover" alt="" style="max-width: 100%; width: 100%; height: auto;">
+                      <a :href="item.url" target="_blank">
+                        <img v-if="item.cover && item.type === 'link'" :src="item.cover" alt="" style="max-width: 100%; width: 100%; height: auto;">
+                      </a>
                     </figure>
+                    <figure>
+                        <img @click="doSomethingWith(item.url); playVideo" v-if="item.cover && item.type === 'media'" :src="item.cover" alt="" style="max-width: 100%; width: 100%; height: auto;">
+                    </figure>                    
                     <div class="gallery-box-caption">
                         <div class="gallery-box-content">
                             <div>
@@ -69,8 +74,14 @@ export default {
     },   
     playing() {
       console.log('/ we are watching!!!')
-    }    
+    },
+    // destroy() {
+    //   this.$destroy();
+    // }        
   },
+  // beforeDestroy() {
+  //   console.log('Main Vue destroyed')
+  // },  
   created() {
     this.api();
   },
