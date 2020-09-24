@@ -1,10 +1,19 @@
 <template>
   <div id="app">
+    <div id="demo" >
+      <ul>
+        <li v-for="mainCat in mainCategories" :key="mainCat.merchantId">
+          <input type="checkbox" :value="mainCat.merchantId" id="mainCat.merchantId" v-model="checkedCategories" @click="check($event)"> {{mainCat.merchantId}}
+
+        </li>
+      </ul>
+      {{ checkedCategories }}
+    </div>    
     <div v-if="statusVideo === true" class="popup" @click="statusVideo = false">
       <youtube :video-id="thing" ref="youtube" @playing="playing" :player-vars="playerVars"></youtube>
     </div>
     <div v-for="item in items" :key="item.id" data-aos="zoom-out-up" data-aos-offset="100" data-aos-easing="ease-out-back" class="col-lg-4 my-4">
-            <div class="col-lg-4 col-sm-6">
+            <div v-if="checkedCategories.includes(item.type)" class="col-lg-4 col-sm-6">
                     <figure>
                       <a :href="item.url" target="_blank">
                         <img v-if="item.cover && item.type === 'link'" :src="item.cover" alt="" style="max-width: 100%; width: 100%; height: auto;">
@@ -50,10 +59,19 @@ export default {
       statusVideo: false,
       playerVars: {
         autoplay: 1
-      }           
+      },
+      checkedCategories: [],
+      mainCategories: [{
+        merchantId: 'link'
+      }, {
+        merchantId: 'media'
+      }],
     }
   }, 
   methods: {
+    check: function() {
+      console.log(this.checkedCategories)
+    },
     doSomethingWith(item) {
         this.thing = item;
         this.statusVideo = true;
