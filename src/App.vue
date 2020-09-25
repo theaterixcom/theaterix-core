@@ -1,10 +1,13 @@
 <template>
   <div id="app">
-    <div id="demo" >
+    <div id="demo">
+      <p>{{ $t("message.hello") }}</p>
+      <select v-model="$i18n.locale">
+        <option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">{{ lang }}</option>
+      </select>
       <ul>
         <li v-for="mainCat in mainCategories" :key="mainCat.merchantId">
-          <input type="checkbox" :value="mainCat.merchantId" id="mainCat.merchantId" v-model="checkedCategories" @click="check($event)"> {{mainCat.merchantId}}
-
+          <input type="checkbox" :value="mainCat.merchantId" id="mainCat.merchantId" v-model="checkedCategories"> {{mainCat.merchantId}}
         </li>
       </ul>
       {{ checkedCategories }}
@@ -37,30 +40,28 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
 import axios from 'axios'
 import Vue from 'vue'
 import VueYoutube from 'vue-youtube'
 
-Vue.use(VueYoutube)
+Vue.use(VueYoutube);
 
 const api = 'https://theaterix.com/api/posts.json'
 
 export default {
-  name: 'App',
-  components: {
-    // HelloWorld
-  },
+  name: 'App', 
+  components: {},
   data: function () {
     return {
       page: 1,
       items: [],
+      langs: ['es', 'en'],
       thing: '',
       statusVideo: false,
       playerVars: {
         autoplay: 1
       },
-      checkedCategories: [],
+      checkedCategories: ["link", "media"],
       mainCategories: [{
         merchantId: 'link'
       }, {
@@ -69,9 +70,6 @@ export default {
     }
   }, 
   methods: {
-    check: function() {
-      console.log(this.checkedCategories)
-    },
     doSomethingWith(item) {
         this.thing = item;
         this.statusVideo = true;
