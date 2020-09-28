@@ -43,8 +43,11 @@
 import axios from 'axios'
 import Vue from 'vue'
 import VueYoutube from 'vue-youtube'
+import BootstrapVue from "bootstrap-vue"
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap-vue/dist/bootstrap-vue.css"
 
-Vue.use(VueYoutube);
+Vue.use(VueYoutube, BootstrapVue);
 
 const api = 'https://theaterix.com/api/posts.json'
 
